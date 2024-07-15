@@ -13,8 +13,8 @@ func Api() mux.Router {
 
 	listRouter := api.PathPrefix("/list").Subrouter()
 
-	listRouter.HandleFunc("/", controllers.ListIndex).Methods("GET")
-	listRouter.HandleFunc("/", controllers.ListStore).Methods("POST")
+	listRouter.HandleFunc("", controllers.ListIndex).Methods("GET")
+	listRouter.HandleFunc("", controllers.ListStore).Methods("POST")
 	listRouter.HandleFunc("/{id}", controllers.ListShow).Methods("GET")
 	listRouter.HandleFunc("/{id}", controllers.ListUpdate).Methods("PUT")
 	listRouter.HandleFunc("/{id}", controllers.ListDelete).Methods("DELETE")

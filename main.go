@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-
 	db := database.Connect()
 	db.AutoMigrate(&models.User{}, &models.List{})
 

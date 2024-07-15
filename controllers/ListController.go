@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"todo/database/models"
 	"todo/services"
 
 	"github.com/gorilla/mux"
@@ -11,17 +13,17 @@ import (
 func ListIndex(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 
-	processed := services.HelloWorld(query)
+	services.ListIndex(query)
 
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", processed)
+	json.NewEncoder(w).Encode(services.ListIndex(query))
 }
 
 func ListStore(w http.ResponseWriter, r *http.Request) {
-	query := r.URL.Query()
+	var list models.List
 
-	processed := services.HelloWorld(query)
+	json.NewDecoder(r.Body).Decode(&list)
 
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", processed)
+	json.NewEncoder(w).Encode(services.ListStore(list))
 }
 
 func ListShow(w http.ResponseWriter, r *http.Request) {
