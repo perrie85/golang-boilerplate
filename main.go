@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"todo/database"
 	"todo/database/models"
@@ -12,5 +13,6 @@ func main() {
 	db.AutoMigrate(&models.User{}, &models.List{})
 
 	apiRoutes := routes.Api()
+	log.Println("Listening On Port 80")
 	http.ListenAndServe(":80", &apiRoutes)
 }

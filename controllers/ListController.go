@@ -8,8 +8,11 @@ import (
 	"todo/database/models"
 	"todo/services"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 )
+
+var validate *validator.Validate
 
 func ListIndex(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
@@ -21,8 +24,34 @@ func ListIndex(w http.ResponseWriter, r *http.Request) {
 
 func ListStore(w http.ResponseWriter, r *http.Request) {
 	var list models.List
+	validate = validator.New(validator.WithRequiredStructEnabled())
 
 	json.NewDecoder(r.Body).Decode(&list)
+
+	err := validate.Struct(list)
+	if err != nil {
+		var response []interface{}
+
+		for _, err := range err.(validator.ValidationErrors) {
+
+			row := []string{
+				err.Namespace(),
+				err.Field(),
+				err.StructNamespace(),
+				err.StructField(),
+				err.Tag(),
+				err.ActualTag(),
+				// err.Kind(),
+				// err.Type(),
+				// err.Value(),
+				// err.Param(),
+			}
+			response = append(response, row)
+		}
+
+		json.NewEncoder(w).Encode(response)
+		return
+	}
 
 	json.NewEncoder(w).Encode(services.ListStore(list))
 }

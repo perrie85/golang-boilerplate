@@ -1,9 +1,18 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type List struct {
-	gorm.Model
-	Title       string
-	Description string
+	ID          uint
+	Title       string `validate:"required"`
+	Description string `validate:"required"`
+	UserId      int    `validate:"required"`
+	User        User
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt
 }
