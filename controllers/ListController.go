@@ -30,7 +30,7 @@ func ListStore(w http.ResponseWriter, r *http.Request) {
 func ListShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	id, err := strconv.ParseInt(vars["id"], 64, 64)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
 
 	if err != nil {
 		log.Fatal(err)
@@ -42,7 +42,7 @@ func ListShow(w http.ResponseWriter, r *http.Request) {
 func ListUpdate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	id, err := strconv.ParseInt(vars["id"], 64, 64)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
 
 	if err != nil {
 		log.Fatal(err)
@@ -58,7 +58,7 @@ func ListUpdate(w http.ResponseWriter, r *http.Request) {
 func ListDelete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	id, err := strconv.ParseInt(vars["id"], 64, 64)
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
 
 	if err != nil {
 		log.Fatal(err)

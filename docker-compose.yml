@@ -9,6 +9,9 @@ services:
       - db
     networks:
       - app_network
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:latest
@@ -23,6 +26,12 @@ services:
       - MYSQL_PASSWORD=123456
     networks:
       - app_network
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 1s
+      interval: 1s
+      timeout: 5s
+      retries: 55
 
 networks:
   app_network:
