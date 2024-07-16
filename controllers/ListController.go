@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 	"todo/database/models"
 	"todo/services"
 
@@ -29,26 +30,39 @@ func ListStore(w http.ResponseWriter, r *http.Request) {
 func ListShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	id := vars["id"]
-	// processed := services.HelloWorld(id)
+	id, err := strconv.ParseInt(vars["id"], 64, 64)
 
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(services.ListShow(id))
 }
 
 func ListUpdate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	id := vars["id"]
-	// processed := services.HelloWorld(id)
+	id, err := strconv.ParseInt(vars["id"], 64, 64)
 
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var bodyDecoded models.List
+
+	json.NewDecoder(r.Body).Decode(&bodyDecoded)
+
+	json.NewEncoder(w).Encode(services.ListUpdate(id, bodyDecoded))
 }
 
 func ListDelete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	id := vars["id"]
-	// processed := services.HelloWorld(id)
+	id, err := strconv.ParseInt(vars["id"], 64, 64)
 
-	fmt.Fprintf(w, "Hello, you've requested: %s\n", id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(services.ListDelete(id))
 }
