@@ -1,11 +1,11 @@
 package main
 
 import (
+	"golang-boilerplate/database"
+	"golang-boilerplate/database/models"
+	"golang-boilerplate/routes"
 	"log"
 	"net/http"
-	"todo/database"
-	"todo/database/models"
-	"todo/routes"
 )
 
 func main() {

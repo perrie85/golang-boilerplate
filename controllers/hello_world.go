@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"fmt"
+	"golang-boilerplate/services"
 	"net/http"
-	"todo/services"
 )
 
 func HelloWorld(w http.ResponseWriter, r *http.Request) {

@@ -1,12 +1,12 @@
-module todo
+module golang-boilerplate
 
 go 1.22.4
 
 require (
+	github.com/go-playground/validator/v10 v10.22.0
 	github.com/gorilla/mux v1.8.1
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.11
-	github.com/go-playground/validator/v10 v10.22.0
 )
 
 require (

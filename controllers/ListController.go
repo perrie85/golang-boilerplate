@@ -2,11 +2,11 @@ package controllers
 
 import (
 	"encoding/json"
+	"golang-boilerplate/database/models"
+	"golang-boilerplate/services"
 	"log"
 	"net/http"
 	"strconv"
-	"todo/database/models"
-	"todo/services"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"

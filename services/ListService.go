@@ -1,9 +1,9 @@
 package services
 
 import (
+	"golang-boilerplate/database"
+	"golang-boilerplate/database/models"
 	"net/url"
-	"todo/database"
-	"todo/database/models"
 )
 
 func ListIndex(params url.Values) []models.List {
