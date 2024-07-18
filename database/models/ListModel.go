@@ -7,12 +7,12 @@ import (
 )
 
 type List struct {
-	ID          uint
-	Title       string `validate:"required"`
-	Description string `validate:"required"`
-	UserId      int    `validate:"required"`
-	User        User
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   gorm.DeletedAt
+	ID          uint           `json:"id"`
+	Title       string         `validate:"required" json:"title"`
+	Description string         `validate:"required" json:"description"`
+	UserId      int            `validate:"required" json:"user_id"`
+	User        User           `json:"user"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `json:"deleted_at"`
 }
