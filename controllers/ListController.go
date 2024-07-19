@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"golang-boilerplate/database/models"
 	"golang-boilerplate/services"
+	"golang-boilerplate/validators/list"
 	"log"
 	"net/http"
 	"strconv"
@@ -15,45 +16,28 @@ import (
 var validate *validator.Validate
 
 func ListIndex(w http.ResponseWriter, r *http.Request) {
-	query := r.URL.Query()
+	var params list.ListIndex
+	params = params.Assign(r)
 
-	services.ListIndex(query)
-
-	json.NewEncoder(w).Encode(services.ListIndex(query))
+	validate = validator.New(validator.WithRequiredStructEnabled())
+	err := params.Validate(w, validate)
+	if err != nil {
+		return
+	}
+	json.NewEncoder(w).Encode(services.ListIndex(params))
 }
 
 func ListStore(w http.ResponseWriter, r *http.Request) {
-	var list models.List
+	var params list.ListStore
+	params = params.Assign(r)
+
 	validate = validator.New(validator.WithRequiredStructEnabled())
-
-	json.NewDecoder(r.Body).Decode(&list)
-
-	err := validate.Struct(list)
+	err := params.Validate(w, validate)
 	if err != nil {
-		var response []interface{}
-
-		for _, err := range err.(validator.ValidationErrors) {
-
-			row := []string{
-				err.Namespace(),
-				err.Field(),
-				err.StructNamespace(),
-				err.StructField(),
-				err.Tag(),
-				err.ActualTag(),
-				// err.Kind(),
-				// err.Type(),
-				// err.Value(),
-				// err.Param(),
-			}
-			response = append(response, row)
-		}
-
-		json.NewEncoder(w).Encode(response)
 		return
 	}
 
-	json.NewEncoder(w).Encode(services.ListStore(list))
+	json.NewEncoder(w).Encode(services.ListStore(params))
 }
 
 func ListShow(w http.ResponseWriter, r *http.Request) {

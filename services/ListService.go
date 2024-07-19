@@ -3,25 +3,26 @@ package services
 import (
 	"golang-boilerplate/database"
 	"golang-boilerplate/database/models"
-	"net/url"
+	"golang-boilerplate/validators/list"
 )
 
-func ListIndex(params url.Values) []models.List {
+func ListIndex(params list.ListIndex) []models.List {
 	db := database.Connect()
 
 	var lists []models.List
 
-	db.Model(&models.List{}).Limit(10).Find(&lists)
+	db.Model(&models.List{}).Preload("User").Limit(10).Find(&lists)
 
 	return lists
 }
 
-func ListStore(params models.List) models.List {
+func ListStore(params list.ListStore) models.List {
 	db := database.Connect()
 
 	list := models.List{
 		Title:       params.Title,
 		Description: params.Description,
+		UserID:      params.UserID,
 	}
 
 	db.Create(&list)
