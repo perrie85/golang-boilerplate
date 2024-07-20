@@ -35,17 +35,17 @@ func ListShow(id int64) models.List {
 
 	var list models.List
 
-	db.Model(&models.List{}).First(&list, id)
+	db.Model(&models.List{}).Preload("User").First(&list, id)
 
 	return list
 }
 
-func ListUpdate(id int64, params models.List) models.List {
+func ListUpdate(id int64, params list.ListUpdate) models.List {
 	db := database.Connect()
 
 	var list models.List
 
-	db.Model(&models.List{}).First(&list, id)
+	db.Model(&models.List{}).Preload("User").First(&list, id)
 
 	list.Title = params.Title
 	list.Description = params.Description

@@ -2,7 +2,6 @@ package list
 
 import (
 	"encoding/json"
-	"fmt"
 	"golang-boilerplate/validators"
 	"net/http"
 
@@ -17,7 +16,6 @@ type ListStore struct {
 
 func (rules ListStore) Assign(r *http.Request) ListStore {
 	json.NewDecoder(r.Body).Decode(&rules)
-	fmt.Println(rules)
 	return rules
 }
 

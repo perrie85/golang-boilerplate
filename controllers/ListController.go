@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"golang-boilerplate/database/models"
 	"golang-boilerplate/services"
 	"golang-boilerplate/validators/list"
 	"log"
@@ -61,11 +60,16 @@ func ListUpdate(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	var bodyDecoded models.List
+	var params list.ListUpdate
+	params = params.Assign(r)
 
-	json.NewDecoder(r.Body).Decode(&bodyDecoded)
+	validate = validator.New(validator.WithRequiredStructEnabled())
+	validationErr := params.Validate(w, validate)
+	if validationErr != nil {
+		return
+	}
 
-	json.NewEncoder(w).Encode(services.ListUpdate(id, bodyDecoded))
+	json.NewEncoder(w).Encode(services.ListUpdate(id, params))
 }
 
 func ListDelete(w http.ResponseWriter, r *http.Request) {
